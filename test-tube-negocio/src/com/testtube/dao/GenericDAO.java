@@ -5,9 +5,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.sql.DataSource;
 
 import org.hibernate.Criteria;
@@ -15,10 +17,14 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 
+import com.testtube.audit.Auditavel;
+import com.testtube.entidade.IGenericEntity;
+
 /**
  * Classe DAO generica para acesso aos dados.
- * 
+ * @author codigosfontes.com.br
  */
+
 public abstract class GenericDAO<T> implements Serializable {
 
 	/**
@@ -30,7 +36,7 @@ public abstract class GenericDAO<T> implements Serializable {
 
 	protected DataSource dataSource;
 
-	private Class<T> persistentClass;
+	protected Class<T> persistentClass;
 
 	public GenericDAO(Class<T> persistenceClass) {
 		this.persistentClass = persistenceClass;
@@ -43,6 +49,18 @@ public abstract class GenericDAO<T> implements Serializable {
 	public void excluir(T entity) {
 		entity = getEntityManager().merge(entity);
 		getEntityManager().remove(entity);
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean remove(T obj) {
+		try {
+			obj = getEntityManager().merge(obj);
+			getEntityManager().remove(obj);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public T buscarPorId(Long id) {
@@ -72,6 +90,15 @@ public abstract class GenericDAO<T> implements Serializable {
 					.setParameter("_valor", valor).setMaxResults(1).getSingleResult();
 		} catch (NoResultException noResultException) {
 			return null;
+		}
+	}
+
+	public Long count() {
+		try {
+			TypedQuery<Long> query = getEntityManager().createQuery("SELECT COUNT(*) FROM " + persistentClass.getName(), Long.class);
+			return (Long) query.getSingleResult();
+		} catch (NoResultException noResultException) {
+			return 0L;
 		}
 	}
 
@@ -109,6 +136,10 @@ public abstract class GenericDAO<T> implements Serializable {
 		return crit.list();
 	}
 
+	public void detach(IGenericEntity entity) {
+		getSession().evict(entity);
+	}
+
 	@SuppressWarnings("unchecked")
 	public T buscarUmPorCriterio(Criterion... criterion) {
 		Criteria crit = getSession().createCriteria(getPersistentClass());
@@ -116,11 +147,6 @@ public abstract class GenericDAO<T> implements Serializable {
 			crit.add(c);
 		}
 		return (T) crit.uniqueResult();
-	}
-
-	public Long count() {
-		Query query = entityManager.createQuery("SELECT COUNT(entity) " + "FROM " + getPersistentClass().getName() + " entity ");
-		return (Long) query.getSingleResult();
 	}
 
 	/**
@@ -135,25 +161,37 @@ public abstract class GenericDAO<T> implements Serializable {
 	 */
 	public Connection getConnection() {
 		try {
-			return dataSource.getConnection();
+			return getDataSource().getConnection();
 		} catch (SQLException ex) {
 			return null;
 		}
 	}
 
 	public EntityManager getEntityManager() {
+		if (entityManager == null)
+			throw new IllegalStateException("EntityManager não pode setar o DAO antes de ser usado.");
 		return entityManager;
 	}
 
-	public void setPersistentClass(Class<T> persistentClass) {
-		this.persistentClass = persistentClass;
+	@Auditavel
+	public T inserir(T entity) {
+		return getEntityManager().merge(entity);
 	}
 
-	public DataSource getDataSource() {
+	@Auditavel
+	public T atualizar(T entity) {
+		return getEntityManager().merge(entity);
+	}
+
+	public void remover(Long PK) {
+		excluir(buscarPorId(PK));
+	}
+
+	protected DataSource getDataSource() {
 		return dataSource;
 	}
 
-	public void setDataSource(DataSource dataSource) {
+	protected void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 

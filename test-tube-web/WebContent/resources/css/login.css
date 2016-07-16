@@ -1,0 +1,30 @@
+/*#############################################################
+
+#############################################################*/
+.painelLogin {
+	margin-top: 13%;
+	-moz-box-shadow: -2px -2px 1px #f2f2f2;
+	-webkit-box-shadow: 2px 2px 2px #f2f2f2;
+	box-shadow: 2px 2px 2px #888;
+}
+
+.separadorLogin {
+	height: 200px;
+	width: 0.1mm;
+	-moz-box-shadow: -8px -8px 5px #888;
+}
+
+#barra {
+	bottom: 0;
+	display: block;
+	height: 40px;
+	position: fixed;
+	width: 100%;
+	text-align: right;
+	font-size: 11px;
+	color: #FFF;
+	background-color: rgba(15, 87, 11, 0.7);
+	border-top: solid;
+	border-top-width: 1px;
+	border-top-color: #000;
+}
