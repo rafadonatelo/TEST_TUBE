@@ -106,7 +106,7 @@ public abstract class AbstractGenericBean<ENTITY extends IGenericEntity> impleme
 			beforeSave();
 			entity = (ENTITY) service().salvar(entity);
 			afterSave();
-			FacesUtil.addInfoMessage("comum.global.msg.info.sucesso");
+			FacesUtil.addInfoMessage("Registro salvo com sucesso!");
 			open();
 			return back();
 
@@ -125,7 +125,7 @@ public abstract class AbstractGenericBean<ENTITY extends IGenericEntity> impleme
 			service().removerEntity(entity);
 			afterRemove();
 			open();
-			FacesUtil.addInfoMessage("comum.global.msg.info.sucesso");
+			FacesUtil.addInfoMessage("Registro removido com sucesso!");
 		} catch (Exception e) {
 			FacesUtil.addErrorMessage(e.getCause().getMessage());
 		}

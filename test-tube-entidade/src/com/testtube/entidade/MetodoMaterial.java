@@ -38,4 +38,20 @@ public class MetodoMaterial extends AuditableEntity {
 		this.id = id;
 	}
 
+	public Metodo getMetodo() {
+		return metodo;
+	}
+
+	public void setMetodo(Metodo metodo) {
+		this.metodo = metodo;
+	}
+
+	public Material getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(Material material) {
+		this.material = material;
+	}
+
 }

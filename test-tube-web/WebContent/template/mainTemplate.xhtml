@@ -4,7 +4,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 	<title>Admin</title>
 
@@ -39,16 +40,19 @@
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
 				<li class="dropdown user user-menu"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> <span
-						class="hidden-xs">#{autenticadorMBean.user}</span>
+					class="dropdown-toggle" data-toggle="dropdown"> 
+							<span class="fa fa-user"></span>
+							<span class="hidden-xs">
+								#{sessionScope.usuarioLogado.login} </span>
+
 				</a>
 					<ul class="dropdown-menu">
-						<li class="user-header">
-
-							<p>
-								#{autenticadorMBean.user} <small>#{autenticadorMBean.user}</small>
-							</p>
-						</li>
+						<li class="user-header"><pe:gravatar
+								style="border-radius: 50%"
+								value="desenvolvedor.rafael@gmail.com" />
+							<p style="color:black">
+								#{sessionScope.usuarioLogado.login} <small>#{sessionScope.usuarioLogado.nome}</small>
+							</p></li>
 						<li class="user-footer"><h:form>
 								<div class="pull-left">
 									<p:commandLink value="PERFIL"
@@ -58,7 +62,7 @@
 								<div class="pull-right">
 									<p:commandLink value="SAIR"
 										styleClass="btn btn-flat btn-danger"
-										action="#{authenticationBean.doLogout()}" />
+										action="#{autenticadorMBean.registraSaida}" />
 								</div>
 							</h:form></li>
 					</ul></li>
@@ -69,11 +73,18 @@
 		<aside class="main-sidebar"> <section class="sidebar">
 		<ul class="sidebar-menu">
 			<li class="header">CADASTRO</li>
-			<li class="active"><p:link href="/admin/cadastros/categoria/consultarCategoria.jsf">
+			<li class="active"><p:link
+					href="/admin/cadastros/assinatura/consultarAssinatura.jsf">
+					<i class="fa fa-edit"></i>
+					<span>Assinaturas</span>
+				</p:link></li>
+			<li class="active"><p:link
+					href="/admin/cadastros/categoria/consultarCategoria.jsf">
 					<i class="fa fa-edit"></i>
 					<span>Categoria</span>
 				</p:link></li>
-			<li class="active"><p:link href="/admin/cadastros/metodo/consultarMetodo.jsf">
+			<li class="active"><p:link
+					href="/admin/cadastros/metodo/consultarMetodo.jsf">
 					<i class="fa fa-edit"></i>
 					<span>Método</span>
 				</p:link></li>
@@ -86,7 +97,10 @@
 		</section> </aside>
 
 		<div class="content-wrapper">
-			<section class="content-header">
+			<section class="content-header"> <p:messages
+				closable="true">
+				<p:effect event="show" delay="5"></p:effect>
+			</p:messages>
 			<h1>
 				<ui:insert name="pageTitle" />
 				<small><ui:insert name="pageDescription" /></small>

@@ -8,7 +8,15 @@ import javax.inject.Inject;
 
 import com.testtube.audit.AuditavelFolha;
 import com.testtube.bo.EntityGenericBO;
+import com.testtube.bo.MaterialBO;
+import com.testtube.bo.MetodoVideoBO;
+import com.testtube.dao.CategoriaDAO;
+import com.testtube.entidade.AssinaturaCategoria;
+import com.testtube.entidade.Categoria;
 import com.testtube.entidade.IGenericEntity;
+import com.testtube.entidade.Material;
+import com.testtube.entidade.MetodoMaterial;
+import com.testtube.entidade.MetodoVideo;
 import com.testtube.generics.ServiceAdapter;
 
 @Stateless
@@ -16,6 +24,15 @@ public class SegurancaService extends ServiceAdapter {
 
 	@Inject
 	private EntityGenericBO entityGenericBO;
+
+	@Inject
+	private MaterialBO materialBO;
+
+	@Inject
+	private MetodoVideoBO metodoVideoBO;
+
+	@Inject
+	private CategoriaDAO categoriaDAO;
 
 	@SuppressWarnings("rawtypes")
 	public IGenericEntity buscarPorID(Class clazz, Long id) {
@@ -54,4 +71,33 @@ public class SegurancaService extends ServiceAdapter {
 	public Long carregarPesquisaLazySize(String fieldOrder, String order, Map<String, Object> parametros, Class entity) {
 		return entityGenericBO.carregarPesquisaLazySize(fieldOrder, order, parametros, entity);
 	}
+
+	public List<Material> buscarMaterialPorNome(String nome) {
+		return materialBO.buscarMaterialPorNome(nome);
+	}
+
+	public void limparDadosDeMaterial(Long idMetodo) {
+		materialBO.limparDadosDeMaterial(idMetodo);
+	}
+
+	public List<MetodoMaterial> buscarMetodosMateriais(Long idMetodo) {
+		return materialBO.buscarMetodosMateriais(idMetodo);
+	}
+
+	public List<MetodoVideo> buscarMetodosVideo(Long idMetodo) {
+		return metodoVideoBO.buscarMetodosVideo(idMetodo);
+	}
+
+	public List<Categoria> buscarCategoriaPorNome(String nome) {
+		return categoriaDAO.buscarCategoriaPorNome(nome);
+	}
+
+	public void limparDadosDeAssinaturaCategoria(Long idAss) {
+		categoriaDAO.limparDadosDeAssinaturaCategoria(idAss);
+	}
+
+	public List<AssinaturaCategoria> buscarAssinaturaCategoria(Long idAss) {
+		return categoriaDAO.buscarAssinaturaCategoria(idAss);
+	}
+
 }

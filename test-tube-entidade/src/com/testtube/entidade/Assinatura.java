@@ -26,10 +26,6 @@ public class Assinatura extends AuditableEntity {
 	@Column(columnDefinition = "text")
 	private String descricao;
 
-	private Long idCategoria;
-
-	private String nomeCategoria;
-
 	public Long getId() {
 		return id;
 	}
@@ -52,22 +48,6 @@ public class Assinatura extends AuditableEntity {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public Long getIdCategoria() {
-		return idCategoria;
-	}
-
-	public void setIdCategoria(Long idCategoria) {
-		this.idCategoria = idCategoria;
-	}
-
-	public String getNomeCategoria() {
-		return nomeCategoria;
-	}
-
-	public void setNomeCategoria(String nomeCategoria) {
-		this.nomeCategoria = nomeCategoria;
 	}
 
 }

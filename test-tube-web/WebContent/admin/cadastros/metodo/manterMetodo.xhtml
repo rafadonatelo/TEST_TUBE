@@ -5,58 +5,82 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/template/mainTemplate.xhtml">
 	<ui:define name="content">
-		<h4>Cadastrar/Editar Metodos</h4>
+		<h4>Cadastrar/Editar metodos</h4>
 		<h:form id="formPrincipal">
+			<p:growl id="msg"></p:growl>
 			<p:panel id="pnlPrincipal">
-				<p:panelGrid id="pGrid" columns="2"
-					columnClasses="ui-grid-col-1,ui-grid-col-1" layout="grid"
+				<p:panelGrid id="pGrid" columns="1" layout="grid"
 					styleClass="ui-panelgrid-blank">
-					<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
-						value="Nome" />
-					<p:inputText size="80" value="#{metodoMBean.entity.nome}"
-						label="Nome" required="true" />
-					<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
-						value="Descrição" />
-					<p:inputTextarea value="#{metodoMBean.entity.descricao}" cols="80"
-						rows="3" required="true" />
-					<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
-						value="Categoria" />
-					<p:selectOneMenu required="true"
-						requiredMessage="Selecione a categoria"
-						converter="converterGeneric" filter="true"
-						filterMatchMode="startsWith" style="width:200px"
-						value="#{metodoMBean.categoria}">
-						<f:selectItem noSelectionOption="true" itemLabel="Selecione...." />
-						<f:selectItems value="#{metodoMBean.listCategoria}" var="c"
-							itemValue="#{c}" itemLabel="#{c.nome}" />
-					</p:selectOneMenu>
-					<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
-						value="Materiais" />
+					<p:panelGrid columns="2" id="gridMetodos"
+						styleClass="ui-panelgrid-blank">
+						<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+							value="Nome" />
+						<p:inputText size="50" value="#{metodoMBean.entity.nome}"
+							label="Nome" required="true" />
+						<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+							value="Descrição" />
+						<p:inputTextarea value="#{metodoMBean.entity.descricao}" cols="50"
+							rows="3" required="true" />
+						<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+							value="Categoria" />
+						<p:selectOneMenu required="true"
+							requiredMessage="Selecione a categoria"
+							converter="converterGeneric" filter="true"
+							filterMatchMode="startsWith" style="width:200px"
+							value="#{metodoMBean.categoria}">
+							<f:selectItem noSelectionOption="true" itemLabel="Selecione...." />
+							<f:selectItems value="#{metodoMBean.listCategoria}" var="c"
+								itemValue="#{c}" itemLabel="#{c.nome}" />
+						</p:selectOneMenu>
+						<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+							value="Materiais" />
+						<p:autoComplete multiple="true" size="50"
+							value="#{metodoMBean.listSelectedMaterial}"
+							completeMethod="#{metodoMBean.completeMaterial}" var="m"
+							itemLabel="#{m.nome}" itemValue="#{m}" maxResults="10"
+							converter="converterGeneric" forceSelection="true"
+							minQueryLength="3">
+							<p:ajax event="itemSelect" process="@this" />
+							<p:column>
+								<h:outputText value="#{m.nome}" />
+							</p:column>
+						</p:autoComplete>
 
-					<p:dataTable id="dtList" value="#{materialMBean.dataModel}"
-						style="width:600px"
-						selection="#{materialMBean.listSelectedMaterial}"
-						paginatorPosition="bottom" var="dataModel" widgetVar="listTable"
-						emptyMessage="Nenhum registro encontrado." paginator="true"
-						lazy="true" rows="5">
-						<p:ajax event="rowSelect" listener="#{materialMBean.onRowSelect}" process="@this" immediate="true"/>
-						<p:column selectionMode="multiple" style="width:50px;text-align:center" />
-						<p:column width="120" style="text-align:center;font-size:12px;"
-							filterBy="#{dataModel.id}" sortBy="#{dataModel.id}">
-							<f:facet name="header">
-								<h:outputText value="id" />
-							</f:facet>
-							<h:outputText value="#{dataModel.id}" />
-						</p:column>
-
-						<p:column style="text-align:center;font-size:12px;"
-							filterBy="#{dataModel.nome}" sortBy="#{dataModel.nome}">
-							<f:facet name="header">
-								<h:outputText value="Nome" />
-							</f:facet>
-							<h:outputText value="#{dataModel.nome}" />
-						</p:column>
-					</p:dataTable>
+					</p:panelGrid>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+						<div id="divBotao" class="man-panel">
+							<p:commandLink id="novoTopButton" ajax="true" process="@this"
+								update="pgVideos" onclick="PF('video').show();"
+								styleClass="fa fa-plus" action="#{metodoMBean.adicionarVideos}">
+								Adicionar Vídeo
+							</p:commandLink>
+						</div>
+						<p:dataTable value="#{metodoMBean.listVideo}" id="pgListVideo"
+							paginator="true" emptyMessage="Nenhum vídeo registrado!" var="v"
+							rows="10">
+							<p:column>
+								<h:outputText value="#{v.video.titulo}"></h:outputText>
+							</p:column>
+							<p:column width="30" style="width:30px">
+								<p:commandLink title="Editar" styleClass="fa fa-edit"
+									process="@this" update=":formPrincipal:pgVideos"
+									onclick="PF('video').show();">
+									<f:setPropertyActionListener value="#{v}"
+										target="#{metodoMBean.mv}"></f:setPropertyActionListener>
+								</p:commandLink>
+							</p:column>
+							<p:column width="30" style="width:30px">
+								<p:commandLink title="Remover" process="@this"
+									styleClass="fa fa-trash"
+									update=":formPrincipal:msg,pgListVideo"
+									onclick="if(confirm('Deseja mesmo excluir o registro?') == false) return false;"
+									action="#{metodoMBean.removerVideo}">
+									<f:setPropertyActionListener value="#{v}"
+										target="#{metodoMBean.mv}"></f:setPropertyActionListener>
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</p:panelGrid>
 				</p:panelGrid>
 			</p:panel>
 			<p:spacer height="5" />
@@ -69,7 +93,44 @@
 					value="Salvar" update="@all">
 				</p:commandButton>
 			</div>
+			<p:dialog header="Vídeos" widgetVar="video" minHeight="40"
+				modal="true" height="450" responsive="true">
+				<p:panelGrid columns="1" id="pgVideos"
+					styleClass="ui-panelgrid-blank">
+					<p:panelGrid columns="1" style="vertical-align:top"
+						styleClass="ui-panelgrid-blank"
+						rendered="#{metodoMBean.mv.video != null}">
+						<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+							value="Título" />
+						<p:inputText size="50" value="#{metodoMBean.mv.video.titulo}"
+							requiredMessage="Titulo Obrigatorio" label="Título"
+							required="true" />
+						<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+							value="Descrição" />
+						<p:inputTextarea value="#{metodoMBean.mv.video.descricao}" cols="50"
+							requiredMessage="Descrição Obrigatorio" autoResize="false"
+							rows="3" required="true" />
+						<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+							value="URL" />
+						<p:inputText size="50" value="#{metodoMBean.mv.video.url}"
+							requiredMessage="URL Obrigatorio" label="URL" required="true">
+							<p:ajax event="change" process="preview" update="preview"></p:ajax>
+						</p:inputText>
 
+					</p:panelGrid>
+					<p:panelGrid columns="1" id="preview" style="vertical-align:top"
+						styleClass="ui-panelgrid-blank">
+
+					</p:panelGrid>
+					<p:commandButton actionListener="#{metodoMBean.salvarVideo}"
+						process="pgVideos"
+						update=":formPrincipal:msg, :formPrincipal:pgListVideo"
+						value="Salvar" oncomplete="PF('video').hide();"
+						style="width:100px;">
+					</p:commandButton>
+
+				</p:panelGrid>
+			</p:dialog>
 		</h:form>
 
 	</ui:define>

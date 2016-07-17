@@ -3,9 +3,11 @@ package com.testtube.beans;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import com.testtube.entidade.SimpleValidate;
 import com.testtube.entidade.Usuario;
@@ -54,10 +56,18 @@ public class AutenticadorMBean implements Serializable {
 				*/
 			}
 		} catch (Exception e) {
-			String error = FacesUtil.getMessageByKey("comum.cadastro.erroLogin");
+			String error = FacesUtil.getMessageByKey("Erro na autenticação!");
 			FacesUtil.addErrorMessage(error + " " + e.getCause().getMessage());
 		}
 		return outcome;
+	}
+	
+	public String registraSaida() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		HttpSession session = (HttpSession) ec.getSession(false);
+		session.removeAttribute("usuario");
+		return "/login.jsf";
 	}
 
 	public String UrlRetorno() {
