@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/template/mainTemplate.xhtml">
+	<ui:param name="featureTitle" value="Manter Configuração de Arquivos" />
+	<ui:define name="content">
+		<h:form id="formPrincipal">
+			<p:panel id="pnlPrincipal">
+
+				<p:panelGrid id="pGrid" columns="2"
+					columnClasses="ui-grid-col-2,ui-grid-col-1" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+						value="Caminho Upload - Anexos" />
+					<p:inputText size="80"
+						value="#{configuracaoArquivosMBean.entity.caminhoUploadAnexos}"
+						required="true" requiredMessage="Caminho Upload obrigatório!" />
+					<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+						value="Caminho Upload - Vídeos" />
+					<p:inputText size="80"
+						value="#{configuracaoArquivosMBean.entity.caminhoUploadVideos}" />
+					<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
+						value="Default" />
+					<p:selectOneMenu
+						value="#{configuracaoArquivosMBean.entity.configDefault}"
+						required="true">
+						<f:selectItem itemLabel="NÃO" itemValue="0" />
+						<f:selectItem itemLabel="SIM" itemValue="1" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</p:panel>
+			<p:spacer height="5" />
+			<div align="center">
+				<p:commandButton action="#{configuracaoArquivosMBean.back()}"
+					process="@this" update="@this" value="Voltar" title="v">
+				</p:commandButton>
+				<p:spacer />
+				<p:commandButton action="#{configuracaoArquivosMBean.save}"
+					process="@all" value="Salvar" update="@all" title="Salvar">
+				</p:commandButton>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

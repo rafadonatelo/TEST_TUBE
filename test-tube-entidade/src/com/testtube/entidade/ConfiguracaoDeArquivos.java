@@ -8,15 +8,6 @@ import javax.persistence.Table;
 
 import com.testtube.audit.AuditableEntity;
 
-
-
-/**
- * 
- * @author Equipe de desenvolvimento DPGE-MS.
- * @since JDK8
- * @version 1.0 - 2016
- * 
- */
 @Entity
 @Table(name = "TB_CONFIGURACAO_ARQUIVOS")
 public class ConfiguracaoDeArquivos extends AuditableEntity {
@@ -28,10 +19,11 @@ public class ConfiguracaoDeArquivos extends AuditableEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String caminhoUpload;// Caminho do diretório fisíco p/ UPLOAD
-	private String urlMidias;// URL principal dos arquivos
-	private String diretorioFotosPerfil;// nome do diretório onde serão salvas
-										// as fotos de perfil
+
+	private String caminhoUploadAnexos;// Caminho do diretório fisíco p/ UPLOAD
+
+	private String caminhoUploadVideos;// URL principal dos arquivos
+
 	private Integer configDefault;// Coluna que identifica a configuração válida
 
 	public void setId(Long id) {
@@ -43,20 +35,20 @@ public class ConfiguracaoDeArquivos extends AuditableEntity {
 		return id;
 	}
 
-	public String getCaminhoUpload() {
-		return caminhoUpload;
+	public String getCaminhoUploadAnexos() {
+		return caminhoUploadAnexos;
 	}
 
-	public void setCaminhoUpload(String caminhoUpload) {
-		this.caminhoUpload = caminhoUpload;
+	public void setCaminhoUploadAnexos(String caminhoUploadAnexos) {
+		this.caminhoUploadAnexos = caminhoUploadAnexos;
 	}
 
-	public String getUrlMidias() {
-		return urlMidias;
+	public String getCaminhoUploadVideos() {
+		return caminhoUploadVideos;
 	}
 
-	public void setUrlMidias(String urlMidias) {
-		this.urlMidias = urlMidias;
+	public void setCaminhoUploadVideos(String caminhoUploadVideos) {
+		this.caminhoUploadVideos = caminhoUploadVideos;
 	}
 
 	public Integer getConfigDefault() {
@@ -65,14 +57,6 @@ public class ConfiguracaoDeArquivos extends AuditableEntity {
 
 	public void setConfigDefault(Integer configDefault) {
 		this.configDefault = configDefault;
-	}
-
-	public String getDiretorioFotosPerfil() {
-		return diretorioFotosPerfil;
-	}
-
-	public void setDiretorioFotosPerfil(String diretorioFotosPerfil) {
-		this.diretorioFotosPerfil = diretorioFotosPerfil;
 	}
 
 }

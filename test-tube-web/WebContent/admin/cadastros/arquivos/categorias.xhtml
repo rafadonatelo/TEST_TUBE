@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<h:form id="form_list">
+		<p:dataGrid columns="3" layout="grid" value="#{categoriaMidiasBean.allCategoriasMidia}"
+			rendered="#{!empty categoriaMidiasBean.allCategoriasMidia}" var="cat" lazy="true" rows="9" styleClass="midias"
+			emptyMessage="Nenhum diretório encontrado." paginator="true" paginatorPosition="top">
+			<p:panelGrid style="width:100%;">
+				<p:row>
+					<p:column style="text-align:center">
+						<p:commandLink action="#{categoriaMidiasBean.carregarSubCategorias}" process="@this" update=":formPrincipal:tbgeral:toolbar,:formPrincipal:tbgeral:form_list,:formPrincipal:tbgeral:files">
+							<f:param value="#{cat.id}" name="categoria_id" />
+							<f:setPropertyActionListener target="#{categoriaMidiasBean.midiasBean.categoriaMidia}" value="#{cat}" />
+							<i class="fa fa-folder-o fa-5x"></i>
+						</p:commandLink>
+						<br />
+						<font size="-1"> 
+							<p:inplace id="basic" editor="true" event="dblclick">
+								<p:inputText value="#{cat.titulo}" size="30">
+									<p:ajax event="change" process="basic" listener="#{categoriaMidiasBean.handleSave}" />
+									<f:param value="#{cat.id}" name="categoria_id" />
+								</p:inputText>
+							</p:inplace>
+						</font>
+					</p:column>
+					
+				</p:row>
+				<p:row>
+					<p:column colspan="2">
+						<p:commandLink title="Excluir registro" process="@this" style="height:15px;width:15px" update=":formPrincipal:tbgeral:form_list"
+							action="#{categoriaMidiasBean.excluir}">
+							<i class="fa fa-trash fa-2x"></i>						
+							<p:confirm header="Confirmação" message="Deseja mesmo excluir este registro?" icon="ui-icon-alert" />
+							<f:setPropertyActionListener target="#{categoriaMidiasBean.categoriaMidia}" value="#{cat}" />
+							<f:param name="categoria_id" value="#{facesContext.externalContext.requestParameterMap.categoria_id}" />
+						</p:commandLink>
+					</p:column>					
+				</p:row>
+			</p:panelGrid>
+		</p:dataGrid>
+		<p:dialog widgetVar="detalheCategoriaMidia" id="detalheCategoriaMidia">
+			<p:panelGrid id="gridDetalheCategoriaMidia" columns="2" style="width:300px">
+				<p:column>
+					<h:outputText value="ID:" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{facesContext.externalContext.requestParameterMap.categoria_id}" />
+				</p:column>
+			</p:panelGrid>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

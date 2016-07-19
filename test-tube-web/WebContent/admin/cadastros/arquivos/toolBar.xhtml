@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core">
+		<p:panelGrid style="width:100%" layout="grid" columns="2">
+			<p:column>
+				<p:commandButton action="#{categoriaMidiasBean.voltarAoInicio()}" process="@this" update=":formPrincipal:tbgeral" icon="ui-icon-arrowreturnthick-1-w" value="Voltar" >
+					<f:param name="entityID" value="#{beneficiarioMBean.entity.id}" />
+				</p:commandButton>
+				
+				<p:commandButton value="Nova Pasta" oncomplete="PF('novoDiretorio').show()" 
+					process="@this" action="#{categoriaMidiasBean.criarNova}" icon="ui-icon-document" />
+				
+				<p:commandButton  value="Anexar" oncomplete="PF('upload').show()"
+					action="#{categoriaMidiasBean.midiasBean.criarNovaMidia()}" update=":formPrincipal:tbgeral:form_upload"
+					disabled="#{categoriaMidiasBean.midiasBean.categoriaMidia.id == null}" icon="ui-icon-arrowstop-1-n" />
+				
+				<p:commandButton type="button" disabled="#{facesContext.externalContext.requestParameterMap.categoria_id == null}"
+					value="Refresh" icon="ui-icon-refresh">
+					<p:ajax event="click" update=":formPrincipal:tbgeral:files" process=":formPrincipal:tbgeral:files" listener="#{categoriaMidiasBean.midiasBean.allMidias}" immediate="true" />
+					<f:param name="categoria_id" value="#{facesContext.externalContext.requestParameterMap.categoria_id}" />
+				</p:commandButton>
+				
+			</p:column>
+			<p:column>
+				<p:inputText style="width:100%" readonly="true" value="Local: #{categoriaMidiasBean.fileBean.pathCorrente}"></p:inputText>
+			</p:column>
+		</p:panelGrid>
+
+</ui:composition>

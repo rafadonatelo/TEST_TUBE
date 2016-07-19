@@ -28,7 +28,7 @@ public class Video extends AuditableEntity {
 
 	@Enumerated(EnumType.STRING)
 	private EnumModoVideo modo;
-
+	
 	@Column(columnDefinition = "text")
 	private String descricao;
 

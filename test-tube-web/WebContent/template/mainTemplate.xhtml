@@ -29,103 +29,116 @@
 	<h:outputStylesheet library="primefaces-bootstrap" name="custom.css" />
 </h:head>
 <h:body styleClass="hold-transition sidebar-mini">
-
-	<div class="wrapper">
-		<header class="main-header"> <a href="#" class="logo"> <span
-			class="logo-mini">T<b>B</b></span> <span class="logo-lg">test<b>Tube</b></span>
-		</a> <nav class="navbar navbar-static-top" role="navigation"> <a
-			href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-			<span class="sr-only"></span>
-		</a>
-		<div class="navbar-custom-menu">
-			<ul class="nav navbar-nav">
-				<li class="dropdown user user-menu"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> 
-							<span class="fa fa-user"></span>
-							<span class="hidden-xs">
+	<p:outputPanel id="output" widgetVar="processos">
+		<p:blockUI block="output" widgetVar="bui" id="bui">
+        Carregando...<br />
+			<p:graphicImage url="/resources/img/loading.gif" width="100" />
+		</p:blockUI>
+		<div class="wrapper">
+			<header class="main-header"> <a href="#" class="logo"> <span
+				class="logo-mini">T<b>B</b></span> <span class="logo-lg">test<b>Tube</b></span>
+			</a> <nav class="navbar navbar-static-top" role="navigation"> <a
+				href="#" class="sidebar-toggle" data-toggle="offcanvas"
+				role="button"> <span class="sr-only"></span>
+			</a>
+			<div class="navbar-custom-menu">
+				<ul class="nav navbar-nav">
+					<li class="dropdown user user-menu"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"> <span
+							class="fa fa-user"></span> <span class="hidden-xs">
 								#{sessionScope.usuarioLogado.login} </span>
 
-				</a>
-					<ul class="dropdown-menu">
-						<li class="user-header"><pe:gravatar
-								style="border-radius: 50%"
-								value="desenvolvedor.rafael@gmail.com" />
-							<p style="color:black">
-								#{sessionScope.usuarioLogado.login} <small>#{sessionScope.usuarioLogado.nome}</small>
-							</p></li>
-						<li class="user-footer"><h:form>
-								<div class="pull-left">
-									<p:commandLink value="PERFIL"
-										styleClass="btn btn-flat btn-default"
-										action="/main/profile/formUserProfile.xhtml?faces-redirect=true" />
-								</div>
-								<div class="pull-right">
-									<p:commandLink value="SAIR"
-										styleClass="btn btn-flat btn-danger"
-										action="#{autenticadorMBean.registraSaida}" />
-								</div>
-							</h:form></li>
-					</ul></li>
+					</a>
+						<ul class="dropdown-menu">
+							<li class="user-header"><pe:gravatar
+									style="border-radius: 50%"
+									value="desenvolvedor.rafael@gmail.com" />
+								<p style="color: black">
+									#{sessionScope.usuarioLogado.login} <small>#{sessionScope.usuarioLogado.nome}</small>
+								</p></li>
+							<li class="user-footer"><h:form>
+									<div class="pull-left">
+										<p:commandLink value="PERFIL"
+											styleClass="btn btn-flat btn-default"
+											action="/main/profile/formUserProfile.xhtml?faces-redirect=true" />
+									</div>
+									<div class="pull-right">
+										<p:commandLink value="SAIR"
+											styleClass="btn btn-flat btn-danger"
+											action="#{autenticadorMBean.registraSaida}" />
+									</div>
+								</h:form></li>
+						</ul></li>
+				</ul>
+			</div>
+			</nav> </header>
+
+			<aside class="main-sidebar"> <section class="sidebar">
+			<ul class="sidebar-menu">
+				<li class="header">CADASTRO</li>
+				<li class="active"><p:link
+						href="/admin/cadastros/assinatura/consultarAssinatura.jsf">
+						<i class="fa fa-edit"></i>
+						<span>Assinaturas</span>
+					</p:link></li>
+				<li class="active"><p:link
+						href="/admin/cadastros/categoria/consultarCategoria.jsf">
+						<i class="fa fa-edit"></i>
+						<span>Categoria</span>
+					</p:link></li>
+				<li class="active"><p:link
+						href="/admin/cadastros/metodo/consultarMetodo.jsf">
+						<i class="fa fa-edit"></i>
+						<span>Método</span>
+					</p:link></li>
+				<li class="active"><p:link
+						href="/admin/cadastros/material/consultarMaterial.jsf">
+						<i class="fa fa-edit"></i>
+						<span>Material</span>
+					</p:link></li>
+				<li class="active"><p:link
+						href="/admin/cadastros/arquivos/consultarConfiguracaoArquivos.jsf">
+						<i class="fa fa-edit"></i>
+						<span>Configuração de arquivos</span>
+					</p:link></li>
+				<li class="active"><p:link
+						href="/admin/cadastros/tipodocumentos/consultarTipoDocumentos.jsf">
+						<i class="fa fa-edit"></i>
+						<span>Tipo Anexos</span>
+					</p:link></li>
 			</ul>
-		</div>
-		</nav> </header>
+			</section> </aside>
 
-		<aside class="main-sidebar"> <section class="sidebar">
-		<ul class="sidebar-menu">
-			<li class="header">CADASTRO</li>
-			<li class="active"><p:link
-					href="/admin/cadastros/assinatura/consultarAssinatura.jsf">
-					<i class="fa fa-edit"></i>
-					<span>Assinaturas</span>
-				</p:link></li>
-			<li class="active"><p:link
-					href="/admin/cadastros/categoria/consultarCategoria.jsf">
-					<i class="fa fa-edit"></i>
-					<span>Categoria</span>
-				</p:link></li>
-			<li class="active"><p:link
-					href="/admin/cadastros/metodo/consultarMetodo.jsf">
-					<i class="fa fa-edit"></i>
-					<span>Método</span>
-				</p:link></li>
-			<li class="active"><p:link
-					href="/admin/cadastros/material/consultarMaterial.jsf">
-					<i class="fa fa-edit"></i>
-					<span>Material</span>
-				</p:link></li>
-		</ul>
-		</section> </aside>
-
-		<div class="content-wrapper">
-			<section class="content-header"> <p:messages
-				closable="true">
-				<p:effect event="show" delay="5"></p:effect>
-			</p:messages>
-			<h1>
-				<ui:insert name="pageTitle" />
-				<small><ui:insert name="pageDescription" /></small>
-			</h1>
-			<ol class="breadcrumb">
-				<li><p:link href="/admin/index.jsf">
-						<i class="fa fa-home"></i>
+			<div class="content-wrapper">
+				<section class="content-header"> <p:messages
+					closable="true">
+					<p:effect event="show" delay="5"></p:effect>
+				</p:messages>
+				<h1>
+					<ui:insert name="pageTitle" />
+					<small><ui:insert name="pageDescription" /></small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><p:link href="/admin/index.jsf">
+							<i class="fa fa-home"></i>
                                 Home
                             </p:link></li>
-				<ui:insert name="breadcrumb" />
-			</ol>
-			</section>
-			<section class="content"> <ui:insert name="content" /> </section>
+					<ui:insert name="breadcrumb" />
+				</ol>
+				</section>
+				<section class="content"> <ui:insert name="content" /> </section>
+			</div>
+
+			<footer class="main-footer"> <a target="_blank" href="#">
+				Copyright (C) 2016 </a>
+			<div class="pull-right hidden-xs">
+				<strong>VERSÃO 0.1</strong>
+			</div>
+			</footer>
 		</div>
 
-		<footer class="main-footer"> <a target="_blank" href="#">
-			Copyright (C) 2016 </a>
-		<div class="pull-right hidden-xs">
-			<strong>VERSÃO 0.1</strong>
-		</div>
-		</footer>
-	</div>
-
-	<ui:insert name="popups" />
-
+		<ui:insert name="popups" />
+	</p:outputPanel>
 	<h:outputScript library="primefaces" name="jquery/jquery.js"
 		target="head" />
 	<h:outputScript library="bootstrap" name="js/bootstrap.min.js" />

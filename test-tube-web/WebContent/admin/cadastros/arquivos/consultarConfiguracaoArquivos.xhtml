@@ -1,0 +1,86 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/template/mainTemplate.xhtml">
+
+	<ui:param name="featureTitle"
+		value="Consultar Configuracao de Arquivos" />
+	<ui:define name="content">
+		<h:form id="form_principal">
+			<div style="width: 100%">
+				<div id="divBotao" class="man-panel">
+					<h4>Consultar configuração de arquivos</h4>
+					<p:commandLink id="novoTopButton" ajax="true" styleClass="fa fa-plus"
+						action="#{configuracaoArquivosMBean.newEntity}">
+						Novo
+					<f:param name="newID" value="sim"></f:param>
+					</p:commandLink>
+				</div>
+				<p:dataTable id="dtList" value="#{configuracaoArquivosMBean.dataModel}"
+					paginatorPosition="bottom" var="dataModel" widgetVar="listTable"
+					emptyMessage="Nenhum registro encontrado." paginator="true"
+					sortBy="#{dataModel.id}" sortOrder="ascending"
+					lazy="true" rows="10">
+					
+					<p:column width="80" style="text-align:center;font-size:12px;" filterStyle="width:50px"
+						filterBy="#{dataModel.id}" sortBy="#{dataModel.id}">
+						<f:facet name="header">
+							<h:outputText value="ID"/>
+						</f:facet>
+						<h:outputText value="#{dataModel.id}" />
+					</p:column>			
+										
+					<p:column style="text-align:center;font-size:12px;"
+						filterBy="#{dataModel.caminhoUploadVideos}" sortBy="#{dataModel.caminhoUploadVideos}">
+						<f:facet name="header">
+							<h:outputText value="Caminho Upload - Vídeos" />
+						</f:facet>
+						<h:outputText value="#{dataModel.caminhoUploadVideos}" />
+					</p:column>
+					
+					<p:column style="text-align:center;font-size:12px;"
+						filterBy="#{dataModel.caminhoUploadAnexos}" sortBy="#{dataModel.caminhoUploadAnexos}">
+						<f:facet name="header">
+							<h:outputText value="Caminho Upload - Anexos" />
+						</f:facet>
+						<h:outputText value="#{dataModel.caminhoUploadAnexos}" />
+					</p:column>
+					
+					<p:column style="text-align:center;font-size:12px;"
+						filterBy="#{dataModel.configDefault}" sortBy="#{dataModel.configDefault}">
+						<f:facet name="header">
+							<h:outputText value="Default" />
+						</f:facet>
+						<h:outputText value="#{dataModel.configDefault == 0 ? 'NÃO' : 'SIM'}" />
+					</p:column>
+					
+					<p:column width="30" style="text-align:center;font-size:12px;"
+						headerText="#{msg['comum.global.acao.editar']}">
+						<p:commandLink title="Editar" action="#{configuracaoArquivosMBean.edit}" styleClass="fa fa-edit">
+							<f:param name="entityID" value="#{dataModel.id}"></f:param>
+						</p:commandLink>
+					</p:column>
+					
+					<p:column width="30" style="text-align:center;font-size:12px;"
+						headerText="#{msg['comum.global.acao.remover']}">
+						<p:commandLink title="Remover" process="@this" styleClass="fa fa-trash"
+							update=":form_principal"
+							onclick="if(confirm('#{msg['comum.global.acoes.excluir.confirm']}') == false) return false;"
+							action="#{configuracaoArquivosMBean.remove}">
+							
+						</p:commandLink>
+					</p:column>
+					
+				</p:dataTable>
+			</div>
+		</h:form>
+
+
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<!-- Dialog Criar -->
+	<p:dialog id="novoDiretorio" widgetVar="novoDiretorio">
+		<p:panelGrid columns="2" id="gridDiretorios">
+			<h:outputLabel value="Nome:" style="width:150px"/>
+			<p:inputText value="#{categoriaMidiasBean.categoriaMidia.titulo}" required="true"
+				requiredMessage="Informe o nome" size="50" />
+			<h:outputLabel value="Categoria Pai:" rendered="#{categoriaMidiasBean.categoriaMidiaPai.id != null}"/>
+			<h:outputText value="#{categoriaMidiasBean.categoriaMidiaPai.id} - #{categoriaMidiasBean.categoriaMidiaPai.titulo}" rendered="#{categoriaMidiasBean.categoriaMidiaPai.id != null}"/>
+			<h:outputText value="" />
+			<h:panelGroup>
+				<p:commandButton
+					value="#{categoriaMidiasBean.categoriaMidia.id == null ? 'Salvar' : 'Alterar'}"
+					action="#{categoriaMidiasBean.insert}" process="gridDiretorios" oncomplete="PF('novoDiretorio').hide()"
+					update=":formPrincipal:tbgeral:form_list" style="width:100px">
+					<f:param name="categoria_id" value="#{facesContext.externalContext.requestParameterMap.categoria_id}"/>
+				</p:commandButton>
+				<p:commandButton value="Fechar" oncomplete="PF('novoDiretorio').hide()" action="#{categoriaMidiasBean.criarNova}"
+					process="@this"
+					style="width:100px" />
+			</h:panelGroup>
+		</p:panelGrid>
+	</p:dialog>
+</ui:composition>

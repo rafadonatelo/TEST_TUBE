@@ -1,0 +1,66 @@
+
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/template/mainTemplate.xhtml">
+	
+	<ui:define name="content">
+		<h:form id="form_principal">
+			<div style="width: 100%">
+				<h4>Consultar Tipo Documentos</h4>
+				<div id="divBotao" class="man-panel">
+					<p:commandLink id="novoTopButton" ajax="true" styleClass="fa fa-plus"
+						action="#{tipoDocumentosMBean.newEntity}">
+						Novo
+					<f:param name="newID" value="sim"></f:param>
+					</p:commandLink>
+				</div>
+				<p:dataTable id="dtList" value="#{tipoDocumentosMBean.dataModel}" sortBy="#{dataModel.descricao}" sortOrder="descending"
+					paginatorPosition="bottom" var="dataModel" widgetVar="listTable"
+					emptyMessage="Nenhum registro encontrado." paginator="true"
+					lazy="true" rows="10">
+
+					<p:column width="180" style="text-align:center;font-size:12px;"
+						filterBy="#{dataModel.id}" sortBy="#{dataModel.id}">
+						<f:facet name="header">
+							<h:outputText value="id" />
+						</f:facet>
+						<h:outputText value="#{dataModel.id}" />
+					</p:column>
+
+					<p:column width="180" style="text-align:center;font-size:12px;"
+						filterBy="#{dataModel.descricao}" sortBy="#{dataModel.descricao}">
+						<f:facet name="header">
+							<h:outputText value="Nome" />
+						</f:facet>
+						<h:outputText value="#{dataModel.descricao}" />
+					</p:column>
+
+					<p:column width="10" style="text-align:center;font-size:12px;"
+						headerText="#{msg['comum.global.acao.editar']}">
+						<p:commandLink title="Editar" action="#{tipoDocumentosMBean.edit}"  styleClass="fa fa-edit">							
+							<f:param name="entityID" value="#{dataModel.id}"></f:param>
+						</p:commandLink>
+					</p:column>
+
+					<p:column width="10" style="text-align:center;font-size:12px;"
+						headerText="#{msg['comum.global.acao.remover']}">
+						<p:commandLink title="Remover" process="@this"  styleClass="fa fa-trash"
+							update=":form_principal"
+							onclick="if(confirm('#{msg['comum.global.acoes.excluir.confirm']}') == false) return false;"
+							action="#{tipoDocumentosMBean.remove}">
+							
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -30,6 +30,10 @@ public class MetodoVideo extends AuditableEntity {
 	@JoinColumn(name = "idVideo")
 	private Video video;
 
+	@ManyToOne
+	@JoinColumn(name = "idMidia")
+	private Midias midia;
+
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +56,14 @@ public class MetodoVideo extends AuditableEntity {
 
 	public void setVideo(Video video) {
 		this.video = video;
+	}
+
+	public Midias getMidia() {
+		return midia;
+	}
+
+	public void setMidia(Midias midia) {
+		this.midia = midia;
 	}
 
 }

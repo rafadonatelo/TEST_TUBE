@@ -7,12 +7,14 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.testtube.audit.AuditavelFolha;
+import com.testtube.bo.ConfiguracaoArquivosBO;
 import com.testtube.bo.EntityGenericBO;
 import com.testtube.bo.MaterialBO;
 import com.testtube.bo.MetodoVideoBO;
 import com.testtube.dao.CategoriaDAO;
 import com.testtube.entidade.AssinaturaCategoria;
 import com.testtube.entidade.Categoria;
+import com.testtube.entidade.ConfiguracaoDeArquivos;
 import com.testtube.entidade.IGenericEntity;
 import com.testtube.entidade.Material;
 import com.testtube.entidade.MetodoMaterial;
@@ -32,7 +34,16 @@ public class SegurancaService extends ServiceAdapter {
 	private MetodoVideoBO metodoVideoBO;
 
 	@Inject
+	private ConfiguracaoArquivosBO configuracaoArquivosBO;
+
+	@Inject
 	private CategoriaDAO categoriaDAO;
+
+	// TODO : CONFIGURAÇÃO DE ARQUIVOS
+
+	public ConfiguracaoDeArquivos obterConfiguracaoDefault() {
+		return configuracaoArquivosBO.obterConfiguracao();
+	}
 
 	@SuppressWarnings("rawtypes")
 	public IGenericEntity buscarPorID(Class clazz, Long id) {

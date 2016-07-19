@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<!-- mode dialog -->
+	<p:dialog id="modeDialog" widgetVar="modeDialog" position="left,top"  height="400" style="height:400px">
+		<h:panelGrid id="pnlModeDialog">
+		<legend>Midias #{categoriaMidiasBean.projeto.titulo}</legend>
+
+		<ui:include src="/subsystems/page/arquivos/upload.xhtml" />
+
+		<h:form id="toolbar">
+			<ui:include src="/subsystems/page/arquivos/criarCategoria.xhtml" />
+			<ui:include src="/subsystems/page/arquivos/toolBar.xhtml" />
+		</h:form>
+
+		<ui:include src="/subsystems/page/arquivos/categorias.xhtml" />
+
+		<ui:include src="/subsystems/page/arquivos/midias.xhtml" />
+		</h:panelGrid>
+	</p:dialog>
+</ui:composition>

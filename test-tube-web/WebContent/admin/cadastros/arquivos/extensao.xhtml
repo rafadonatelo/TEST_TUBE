@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+		<h:panelGroup rendered="#{cat.extensao eq 'png' or cat.extensao eq 'PNG' 
+								or cat.extensao eq 'gif' or cat.extensao eq 'GIF' 
+								or cat.extensao eq 'jpeg' or cat.extensao eq 'JPEG' 
+								or cat.extensao eq 'jpg' or cat.extensao eq 'JPG'}">
+			<p:graphicImage  url="#{categoriaMidiasBean.configuracaoArquivosMBean.configuracaoDefault.urlMidias}#{categoriaMidiasBean.b.nome}-#{categoriaMidiasBean.b.id}/#{categoriaMidiasBean.fileBean.curlLocation}#{cat.nomeDoArquivo}" 
+			width="150" height="150"/>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{cat.extensao eq 'pdf' or cat.extensao eq 'PDF'}">
+			<i class="fa fa-file-pdf-o fa-5x"></i>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{cat.extensao eq 'xls' or cat.extensao eq 'xlsx' or cat.extensao eq 'csv'}">
+			<i class="fa fa-file-excel-o fa-5x"></i>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{cat.extensao eq 'doc' or cat.extensao eq 'docx'}">
+			<i class="fa fa-file-word-o fa-5x"></i>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{cat.extensao eq 'zip' or cat.extensao eq 'rar'}">
+			<i class="fa fa-file-archive-o fa-5x"></i>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{cat.extensao eq 'txt'}">
+			<i class="fa fa-file-text-o fa-5x"></i>
+		</h:panelGroup>
+</ui:composition>

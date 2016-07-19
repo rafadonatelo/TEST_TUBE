@@ -93,7 +93,7 @@
 					value="Salvar" update="@all">
 				</p:commandButton>
 			</div>
-			<p:dialog header="Vídeos" widgetVar="video" minHeight="40"
+			<p:dialog header="Vídeos" widgetVar="video" minHeight="40" position="left"
 				modal="true" height="450" responsive="true">
 				<p:panelGrid columns="1" id="pgVideos"
 					styleClass="ui-panelgrid-blank">
@@ -107,16 +107,24 @@
 							required="true" />
 						<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
 							value="Descrição" />
-						<p:inputTextarea value="#{metodoMBean.mv.video.descricao}" cols="50"
-							requiredMessage="Descrição Obrigatorio" autoResize="false"
-							rows="3" required="true" />
+						<p:inputTextarea value="#{metodoMBean.mv.video.descricao}"
+							cols="50" requiredMessage="Descrição Obrigatorio"
+							autoResize="false" rows="3" required="true" />
 						<h:outputLabel style="font-weight: bolder;opacity: 0.9;"
-							value="URL" />
-						<p:inputText size="50" value="#{metodoMBean.mv.video.url}"
-							requiredMessage="URL Obrigatorio" label="URL" required="true">
-							<p:ajax event="change" process="preview" update="preview"></p:ajax>
-						</p:inputText>
-
+							value="Vídeo" />
+						<h:outputText styleClass="fa fa-file-video-o" value="#{metodoMBean.mv.midia.titulo}" rendered="#{metodoMBean.mv.midia != null}"></h:outputText>
+						<p:fileUpload id="fileUpload" rendered="#{metodoMBean.mv.midia == null}"
+							fileUploadListener="#{metodoMBean.criaArquivoESalvar}"
+							previewWidth="80" fileLimit="1" onstart="PF('bui').show()"
+							oncomplete="PF('bui').hide();" cancelLabel="Cancelar"
+							fileLimitMessage="Você pode selecionar apenas 1 arquivo por vez."
+							invalidFileMessage="Tipo invalido."
+							invalidSizeMessage="Arquivo muito grande." mode="advanced"
+							process="@this" auto="true" multiple="false"
+							update="pgVideos, :formPrincipal:msg"
+							label="Procurar arquivo" sizeLimit="90000000"
+							allowTypes="/(\.|\/)(mp4|3gp)$/">
+						</p:fileUpload>
 					</p:panelGrid>
 					<p:panelGrid columns="1" id="preview" style="vertical-align:top"
 						styleClass="ui-panelgrid-blank">
